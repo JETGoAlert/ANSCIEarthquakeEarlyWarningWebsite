@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Reporting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header><h1>Community Earthquake Reports</h1></header>
+    <main>
+        <form id="report-form">
+            <label for="intensity">Earthquake Intensity (1-10):</label>
+            <input type="number" id="intensity" min="1" max="10" required>
+            <br>
+            <label for="comments">Comments:</label>
+            <textarea id="comments" required></textarea>
+            <br>
+            <button type="submit">Submit Report</button>
+        </form>
+    </main>
+    <footer>© 2025 JET GO ALERT</footer>
+</body>
+</html>

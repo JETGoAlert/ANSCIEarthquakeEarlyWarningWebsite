@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Earthquake Alerts</title>
+    <title>Earthquake Alerts</title>
     <link rel="stylesheet" href="style.css">
     <script defer src="script.js"></script>
 </head>
 <body>
-    <header><h1>Live Earthquake Alerts</h1></header>
+    <header>
+        <h1>Live Earthquake Alerts</h1>
+    </header>
+
     <main>
-        <p>Latest earthquake warnings and seismic activity.</p>
-        <button onclick="checkForAlerts()">Check for Updates</button>
-        <div id="alerts"></div>
+        <div id="alert-box" class="alert-default">
+            <h2>Checking for alerts...</h2>
+            <p>Latest earthquake details will appear here.</p>
+        </div>
+        <button onclick="checkForAlerts()">Refresh Alerts</button>
     </main>
-    <footer>© 2025 JET GO ALERT</footer>
+
+    <footer>
+        <p>Stay safe! Follow emergency procedures.</p>
+    </footer>
 </body>
 </html>

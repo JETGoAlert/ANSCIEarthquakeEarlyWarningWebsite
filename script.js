@@ -1,47 +1,98 @@
-const alertBox = document.getElementById("alert-box");
-const alertSound = new Audio("assets/alert.mp3");
+// Play alert sound function
+const alertSound = new Audio("sounds/alert.mp3");
 
+// Function to fetch and display earthquake alerts
 async function checkForAlerts() {
-    const apiURL = "https://earthquake.phivolcs.dost.gov.ph/api/latest"; // Example API URL
+    const apiURL = "https://earthquake.phivolcs.dost.gov.ph/api/latest";  // Example PHIVOLCS API URL
 
     try {
         let response = await fetch(apiURL);
         let data = await response.json();
-
+        
         if (data.earthquakes.length > 0) {
             let quake = data.earthquakes[0];
             let magnitude = quake.magnitude;
             let location = quake.location;
-            let severity = getSeverityLevel(magnitude);
-            
-            alertBox.innerHTML = `
-                <h2>${severity.message}</h2>
-                <p><strong>Magnitude:</strong> ${magnitude}</p>
-                <p><strong>Location:</strong> ${location}</p>
-                <p><strong>Advice:</strong> ${severity.advice}</p>
+
+            // Determine alert level based on magnitude
+            let alertLevel;
+            if (magnitude < 3.0) {
+                alertLevel = "Blue (Minor)";
+            } else if (magnitude < 4.5) {
+                alertLevel = "Green (Light)";
+            } else if (magnitude < 6.0) {
+                alertLevel = "Yellow (Moderate)";
+            } else if (magnitude < 7.5) {
+                alertLevel = "Orange (Strong)";
+            } else {
+                alertLevel = "Red (Severe)";
+            }
+
+            // Display alert
+            document.getElementById("alert-container").innerHTML = `
+                <div class="alert ${alertLevel.toLowerCase()}">
+                    <strong>⚠️ Earthquake Alert:</strong> ${magnitude} magnitude near ${location} <br>
+                    Alert Level: ${alertLevel} <br>
+                    <em>Drop, Cover, Hold On!</em>
+                </div>
             `;
-            alertBox.className = severity.class;
+
+            // Play sound
             alertSound.play();
         } else {
-            alertBox.innerHTML = "<h2>✅ No recent earthquake detected.</h2>";
-            alertBox.className = "alert-default";
+            document.getElementById("alert-container").innerHTML = "✅ No recent earthquake detected.";
         }
     } catch (error) {
         console.error("Error fetching earthquake data:", error);
     }
 }
 
-// Function to determine alert severity
-function getSeverityLevel(magnitude) {
-    if (magnitude < 3.0) {
-        return { class: "alert-blue", message: "Minor Earthquake", advice: "No action needed." };
-    } else if (magnitude < 5.0) {
-        return { class: "alert-green", message: "Light Earthquake", advice: "Stay alert." };
-    } else if (magnitude < 6.0) {
-        return { class: "alert-yellow", message: "Moderate Earthquake", advice: "Be prepared to take action." };
-    } else if (magnitude < 7.0) {
-        return { class: "alert-orange", message: "Strong Earthquake", advice: "Drop, Cover, Hold On!" };
-    } else {
-        return { class: "alert-red", message: "Severe Earthquake!", advice: "Immediate action required!" };
+// Initialize Google Maps
+function initMap() {
+    var map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 14.6255, lng: 121.1222 }, // Example coordinates for Antipolo
+        zoom: 14,
+    });
+
+    new google.maps.Marker({
+        position: { lat: 14.6255, lng: 121.1222 },
+        map,
+        title: "Antipolo City National Science and Technology High School",
+    });
+}
+
+// Function to fetch past earthquake data
+async function loadPastEarthquakeData() {
+    try {
+        let response = await fetch("data/past_earthquakes.json");
+        let earthquakes = await response.json();
+
+        let output = "<h3>Past Earthquakes</h3><ul>";
+        earthquakes.forEach(quake => {
+            output += `<li>${quake.date} - ${quake.magnitude} magnitude at ${quake.location}</li>`;
+        });
+        output += "</ul>";
+
+        document.getElementById("past-earthquakes").innerHTML = output;
+    } catch (error) {
+        console.error("Error loading past earthquake data:", error);
+    }
+}
+
+// Load offline emergency guides
+async function loadEmergencyGuides() {
+    try {
+        let response = await fetch("data/emergency_guides.json");
+        let guides = await response.json();
+
+        let output = "<h3>Emergency Preparedness</h3><ul>";
+        guides.forEach(guide => {
+            output += `<li>${guide.title}: ${guide.instructions}</li>`;
+        });
+        output += "</ul>";
+
+        document.getElementById("emergency-guides").innerHTML = output;
+    } catch (error) {
+        console.error("Error loading emergency guides:", error);
     }
 }

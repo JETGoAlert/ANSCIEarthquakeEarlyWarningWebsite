@@ -1,0 +1,16 @@
+{
+    "earthquakes": [
+        {
+            "date": "2025-03-01",
+            "location": "Antipolo, Philippines",
+            "magnitude": 4.5,
+            "depth": 10
+        },
+        {
+            "date": "2025-02-15",
+            "location": "Metro Manila, Philippines",
+            "magnitude": 5.2,
+            "depth": 15
+        }
+    ]
+}

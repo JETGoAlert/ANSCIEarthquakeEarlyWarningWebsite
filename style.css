@@ -1,45 +1,46 @@
 body {
     font-family: Arial, sans-serif;
+    text-align: center;
     margin: 0;
     padding: 0;
-    background: #f4f4f4;
-    text-align: center;
+    background-color: #f4f4f4;
 }
 
-header {
-    background: #d9534f;
+header, footer {
+    background: #222;
     color: white;
     padding: 10px 0;
 }
 
 nav ul {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    background: #333;
 }
 
 nav ul li {
-    display: inline;
     margin: 10px;
 }
 
 nav ul li a {
+    color: white;
     text-decoration: none;
-    font-weight: bold;
-    color: #d9534f;
-}
-
-main {
-    padding: 20px;
 }
 
 button {
-    background: #d9534f;
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #007BFF;
     color: white;
     border: none;
-    padding: 10px 20px;
     cursor: pointer;
 }
 
-button:hover {
-    background: #c9302c;
-}
+.alert-default { background: #ccc; padding: 20px; }
+.alert-blue { background: #6ec6ff; color: #004c8c; }
+.alert-green { background: #a4fba6; color: #036c03; }
+.alert-yellow { background: #fff57e; color: #8a7600; }
+.alert-orange { background: #ffae42; color: #8c4600; }
+.alert-red { background: #ff5c5c; color: #8c0000; font-weight: bold; }
